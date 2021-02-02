@@ -17,9 +17,8 @@ import json
 # json utility
 # -------------------------------------------------------------------------------------------------------------------- #
 
-def upload_json(bucket_name, file_path, file_name):
+def client_demo():
     """ uploads a given json structure into s3 storage """
-    print("uploading json file to s3 storage...")
     s3 = boto3.client('s3')
     print(s3.list_buckets())
 
@@ -29,4 +28,7 @@ def upload_json(bucket_name, file_path, file_name):
 # -------------------------------------------------------------------------------------------------------------------- #
 
 def main():
-    print("working on it")
+    client_demo()
+
+
+main()
