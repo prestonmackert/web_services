@@ -14,13 +14,25 @@ import json
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
-# json utility
+# json utility methods
 # -------------------------------------------------------------------------------------------------------------------- #
 
-def client_demo():
+def list_bucket_options():
     """ uploads a given json structure into s3 storage """
     s3 = boto3.client('s3')
-    print(s3.list_buckets())
+
+    # cleaning up meta-data
+    s3_buckets = s3.list_buckets()
+
+    # parsing the response from amazon, thanks dad
+    meta_data = s3_buckets['ResponseMetadata']
+    buckets = s3_buckets['Buckets']
+    owner = s3_buckets['Owner']
+
+    # Kobe
+    for bucket in buckets:
+        print(bucket)
+
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -28,7 +40,8 @@ def client_demo():
 # -------------------------------------------------------------------------------------------------------------------- #
 
 def main():
-    client_demo()
+    list_bucket_options()
 
 
+# run script
 main()

@@ -21,3 +21,4 @@ def load_text(file_path):
     text = open(path, "r")
     lines = text.readlines()
     return lines
+

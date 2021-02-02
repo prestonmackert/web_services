@@ -1,5 +1,5 @@
 """
-This is a utility file for dealing with AWS' transcribe algorithm
+This is a utility file for dealing with AWS' translation algorithm
 
 @author Preston Mackert
 """
@@ -9,8 +9,6 @@ This is a utility file for dealing with AWS' transcribe algorithm
 # -------------------------------------------------------------------------------------------------------------------- #
 
 import boto3
-import os
-import json
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
