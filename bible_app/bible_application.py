@@ -11,9 +11,9 @@ This is a small application that leverages text from the original bible to showc
 import boto3
 import os
 import json
-from amazon_web_services.aws_utility import storage_controller as s3_util
-from amazon_web_services.aws_utility import translate_controller as translator
-from amazon_web_services.demi_bot import system_utility
+from aws_utility import storage_controller as s3_util
+from aws_utility import translate_controller as translator
+from demi_bot import system_utility
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
