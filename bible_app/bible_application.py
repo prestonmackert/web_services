@@ -167,12 +167,9 @@ def main():
     new_testament_text = system_utility.load_text('/raw_text_files/newtestatment.txt')
     quaran_text = system_utility.load_text('/raw_text_files/quran.txt')
     new_testament = create_new_testament(new_testament_text)
-    quran = create_quran(quaran_text)
+    quran_surahs = create_quran(quaran_text)
     # english_new_testament = translate_new_testament(new_testament)
-    # bible_app(new_testament)
-    for surah in quran:
-        print(surah)
-
+    bible_app(new_testament)
 
 
 # running the script
