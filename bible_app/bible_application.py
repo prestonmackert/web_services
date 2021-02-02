@@ -59,7 +59,7 @@ def bible_app(new_testament, quran_surahs):
                 print("invalid search...")
                 input("press any key to continue...")
 
-        elif user_selection == '3':
+        elif user_selection == '4':
             print("goodbye!")
             os._exit(0)
 

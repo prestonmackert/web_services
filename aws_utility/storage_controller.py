@@ -44,7 +44,7 @@ def upload_object(data_element):
 # -------------------------------------------------------------------------------------------------------------------- #
 
 def main():
-    list_bucket_options()
+    print_bucket_options()
 
 
 # run script
