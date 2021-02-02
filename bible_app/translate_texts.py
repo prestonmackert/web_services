@@ -7,7 +7,6 @@
 # -------------------------------------------------------------------------------------------------------------------- #
 
 import json
-from aws_utility import storage_controller as s3_util
 from aws_utility import translate_controller as translator
 from demi_bot import system_utility
 from bible_app import create_searchable_texts as text_parser
@@ -47,8 +46,6 @@ def translate_new_testament(new_testament):
     partial_english_json = json.dumps(full_english_text, indent=4)
     with open('json_files/partial_english_translation.json', 'w') as json_file:
         json_file.write(partial_english_json)
-
-    s3_util.upload_json("comprehend-examples", 'json_files/partial_english_translation.json', "english_new_testament.json")
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
