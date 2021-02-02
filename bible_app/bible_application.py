@@ -8,112 +8,14 @@ This is a small application that leverages text from the original bible to showc
 # imports
 # -------------------------------------------------------------------------------------------------------------------- #
 
-import boto3
 import os
-import json
-from aws_utility import storage_controller as s3_util
-from aws_utility import translate_controller as translator
+from bible_app import create_searchable_texts as text_parser
+from aws_utility import translate_controller
 from demi_bot import system_utility
-from collections import namedtuple
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
-# support functions for creating a searchable new testament
-# -------------------------------------------------------------------------------------------------------------------- #
-
-def create_new_testament(text):
-    """ converts the plain text file of the greek new testament to a dictionary """
-    new_testament = {}
-
-    # this is unique to our file, but the concepts are transferable
-    for line in text:
-        data_structure = line.split('|')
-        book = data_structure[0]
-        chapter = data_structure[1]
-        verse = data_structure[2]
-        verse_text = data_structure[3].rstrip()
-
-        """ creating our data structure so that the greek new testament is searchable, for example, here is how to 
-        access revelation chapter 21 verse 3 text: new_testament['Rev']['21'][2][1] """
-        if book in list(new_testament.keys()):
-            if chapter in list(new_testament[book].keys()):
-                new_testament[book][chapter].append((verse, verse_text))
-            else:
-                new_testament[book][chapter] = [(verse, verse_text)]
-        else:
-            new_testament[book] = {chapter: [(verse, verse_text)]}
-
-    # return a dictionary of the new testament
-    return new_testament
-
-
-def create_quran(text):
-    """ converts the plain text file of an english translation of the quran """
-    surahs = []
-
-    # more uniqueness
-    for line in text:
-        # the text from the line is converted into a list
-        data_structure = line.split()
-
-        # will structure the quran into appropriate chunks, like we did with the new testament
-        try:
-            # the plain text file is split up so that each new surah is defined in the first word
-            if data_structure[0] == 'SURA':
-                surah_number = data_structure[1].replace('.', '')
-                arabic_name = data_structure[2]
-                english_name = ''.join(data_structure[3:]).replace('(', '')
-                english_name = english_name.replace(')', '')
-
-                surahs.append([surah_number, arabic_name, english_name])
-
-        except IndexError:
-            continue
-
-    # i'm tapping with this basic data structure, quran is difficult man...
-    return surahs
-
-
-# -------------------------------------------------------------------------------------------------------------------- #
-# bible support functions
-# -------------------------------------------------------------------------------------------------------------------- #
-
-def translate_new_testament(new_testament):
-    """ saves a list of tuples, where each tuple = 1 chapter """
-    print("translating the greek bible into english using AWS...")
-    full_text = []
-    for book in new_testament:
-        book_text = ''
-        for chapter in new_testament[book]:
-            chapter_text = ''
-            for verse in new_testament[book][chapter]:
-                chapter_text += verse[1] + " "
-            book_text += chapter_text + " "
-        full_text.append((book, book_text))
-
-
-    """ we're going to write the full text into a text file to demonstrate how we measure expense from AWS :/ """
-    with open('raw_text_files/newtestatment_text_to_translate.txt', 'w') as text_file:
-        for book in full_text:
-            text_file.write(book[0] + ":\n" + book[1] + "\n\n")
-
-    """ now we're going to chop down the text into consumable chunks for the AWS 'translate' service, ain't free :/ """
-    full_english_text = {}
-    for book in full_text:
-        # send the first 100 characters of each book into the aws translation engine
-        consumable_chunk = book[1][:100]
-        english_text = translator.translate_text(consumable_chunk)
-        full_english_text[book[0]] = english_text
-
-    partial_english_json = json.dumps(full_english_text, indent=4)
-    with open('json_files/partial_english_translation.json', 'w') as json_file:
-        json_file.write(partial_english_json)
-
-    s3_util.upload_json("comprehend-examples", 'json_files/partial_english_translation.json', "english_new_testament.json")
-
-
-# -------------------------------------------------------------------------------------------------------------------- #
-# support functions for creating a searchable new testament
+# menu-based application
 # -------------------------------------------------------------------------------------------------------------------- #
 
 def bible_app(new_testament):
@@ -143,7 +45,7 @@ def bible_app(new_testament):
                 selected_verse = new_testament[book_selection][chapter_selection][int(verse_selection)-1][1]
                 print(book_selection, chapter_selection + ":" + verse_selection + " -", selected_verse)
                 print("translating original greek text...")
-                english_text = translator.translate_text(selected_verse)
+                english_text = translate_controller.translate_text(selected_verse)
                 print(english_text)
                 input("press any key to continue...")
 
@@ -164,11 +66,14 @@ def bible_app(new_testament):
 # -------------------------------------------------------------------------------------------------------------------- #
 
 def main():
+    # loading in the new testament form text file and calling support to parse file
     new_testament_text = system_utility.load_text('/raw_text_files/newtestatment.txt')
-    quaran_text = system_utility.load_text('/raw_text_files/quran.txt')
-    new_testament = create_new_testament(new_testament_text)
-    quran_surahs = create_quran(quaran_text)
-    # english_new_testament = translate_new_testament(new_testament)
+    new_testament = text_parser.create_new_testament(new_testament_text)
+
+    # todo: make quran searchable text and add to the application
+    # quaran_text = system_utility.load_text('/raw_text_files/quran.txt')
+    # quran_surahs = text_parser.create_quran(quaran_text)
+
     bible_app(new_testament)
 
 
