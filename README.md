@@ -1,5 +1,5 @@
 # web_services
-Looking at "big tech"
+The goal here is to demonstrate how web services provided by major tech companies work. There are a lot of options and a lot of different things we can do with these services.
 
 ## Bible App
 This is a small menu-driven python application that can be used to teach data structures, basic search, and how to leverage AWS compute infrastructure.
