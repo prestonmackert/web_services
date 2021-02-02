@@ -17,7 +17,7 @@ import json
 # json utility methods
 # -------------------------------------------------------------------------------------------------------------------- #
 
-def list_bucket_options():
+def print_bucket_options():
     """ uploads a given json structure into s3 storage """
     s3 = boto3.client('s3')
 
@@ -32,6 +32,10 @@ def list_bucket_options():
     # Kobe
     for bucket in buckets:
         print(bucket)
+
+
+def upload_object(data_element):
+    print(data_element)
 
 
 
