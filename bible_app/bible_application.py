@@ -14,6 +14,7 @@ import json
 from aws_utility import storage_controller as s3_util
 from aws_utility import translate_controller as translator
 from demi_bot import system_utility
+from collections import namedtuple
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -44,6 +45,33 @@ def create_new_testament(text):
 
     # return a dictionary of the new testament
     return new_testament
+
+
+def create_quran(text):
+    """ converts the plain text file of an english translation of the quran """
+    surahs = []
+
+    # more uniqueness
+    for line in text:
+        # the text from the line is converted into a list
+        data_structure = line.split()
+
+        # will structure the quran into appropriate chunks, like we did with the new testament
+        try:
+            # the plain text file is split up so that each new surah is defined in the first word
+            if data_structure[0] == 'SURA':
+                surah_number = data_structure[1].replace('.', '')
+                arabic_name = data_structure[2]
+                english_name = ''.join(data_structure[3:]).replace('(', '')
+                english_name = english_name.replace(')', '')
+
+                surahs.append([surah_number, arabic_name, english_name])
+
+        except IndexError:
+            continue
+
+    # i'm tapping with this basic data structure, quran is difficult man...
+    return surahs
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -136,10 +164,14 @@ def bible_app(new_testament):
 # -------------------------------------------------------------------------------------------------------------------- #
 
 def main():
-    text = system_utility.load_text('/raw_text_files/newtestatment.txt')
-    new_testament = create_new_testament(text)
+    new_testament_text = system_utility.load_text('/raw_text_files/newtestatment.txt')
+    quaran_text = system_utility.load_text('/raw_text_files/quran.txt')
+    new_testament = create_new_testament(new_testament_text)
+    quran = create_quran(quaran_text)
     # english_new_testament = translate_new_testament(new_testament)
-    bible_app(new_testament)
+    # bible_app(new_testament)
+    for surah in quran:
+        print(surah)
 
 
 
