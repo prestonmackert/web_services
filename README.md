@@ -12,3 +12,5 @@ I added the Quran as english text (harder to find a plain text file that is nice
 implement more AWS support functions, namely storage manipulation and comprehend services with our available text.
 
 ![Doge](https://i.imgflip.com/3f0jb1.jpg)
+
+![Everything is Nothing](https://www.youtube.com/watch?v=xuCn8ux2gbs&t=29s&ab_channel=billwurtz)
