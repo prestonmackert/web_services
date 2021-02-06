@@ -12,6 +12,5 @@ To get startded navigate to demi_bot -> Standard Operating Procedures
 ### ToDo
 implement more AWS support functions, namely storage manipulation and comprehend services with our available text.
 
-![Doge](https://i.imgflip.com/3f0jb1.jpg)
+[![Everything is Nothing](https://i.imgflip.com/3f0jb1.jpg)](https://www.youtube.com/watch?v=xuCn8ux2gbs&t=29s&ab_channel=billwurtz)
 
-[![Everything is Nothing](https://www.youtube.com/watch?v=xuCn8ux2gbs&t=29s&ab_channel=billwurtz)]
