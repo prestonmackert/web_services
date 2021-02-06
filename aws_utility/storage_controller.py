@@ -8,9 +8,9 @@ This is a utility file for dealing with AWS' object storage.... 's3'
 # imports
 # -------------------------------------------------------------------------------------------------------------------- #
 
+import logging
 import boto3
-import os
-import json
+from botocore.exceptions import ClientError
 
 
 # -------------------------------------------------------------------------------------------------------------------- #
@@ -34,8 +34,20 @@ def print_bucket_options():
         print(bucket)
 
 
-def upload_object(data_element):
-    print(data_element)
+def upload_object(file_name, bucket_name, object_name):
+    if object_name is None:
+        object_name = file_name
+
+    s3 = boto3.client('s3')
+
+    try:
+        response = s3.upload_file(file_name, bucket_name, object_name)
+
+    except ClientError as e:
+        logging.error(e)
+        return False
+
+    return True
 
 
 
@@ -45,6 +57,7 @@ def upload_object(data_element):
 
 def main():
     print_bucket_options()
+    upload_object('/raw_text_files/newtestatment.txt', 'comprehend-examples')
 
 
 # run script
