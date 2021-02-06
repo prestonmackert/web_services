@@ -8,9 +8,10 @@ The original Greek text of the new testament is formatted nicely and allows us t
 
 I added the Quran as english text (harder to find a plain text file that is nicely formatted... original arabic would require image recognition so I stuck with an english translation that I found). I left the function of 'creating the quran' as just formatting the surahs... cause the text file I found was formatted grossly.
 
+To get startded navigate to demi_bot -> Standard Operating Procedures
 ### ToDo
 implement more AWS support functions, namely storage manipulation and comprehend services with our available text.
 
 ![Doge](https://i.imgflip.com/3f0jb1.jpg)
 
-![Everything is Nothing](https://www.youtube.com/watch?v=xuCn8ux2gbs&t=29s&ab_channel=billwurtz)
+[![Everything is Nothing](https://www.youtube.com/watch?v=xuCn8ux2gbs&t=29s&ab_channel=billwurtz)]
